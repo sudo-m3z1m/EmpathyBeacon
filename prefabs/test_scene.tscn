@@ -1,3 +1,60 @@
-[gd_scene format=3 uid="uid://cpq4ee1w3aflq"]
+[gd_scene load_steps=12 format=3 uid="uid://cpq4ee1w3aflq"]
+
+[ext_resource type="Texture2D" uid="uid://dvcj86rnbuqpg" path="res://icon.svg" id="1_q6dru"]
+[ext_resource type="PackedScene" uid="uid://4254jrn10k03" path="res://prefabs/player/player.tscn" id="2_m3hr2"]
+[ext_resource type="PackedScene" uid="uid://ck4b4bmriaftl" path="res://prefabs/interactable_objects/interactable_object.tscn" id="3_nwm4q"]
+[ext_resource type="PackedScene" uid="uid://c6ro7fkydoa7c" path="res://prefabs/enemies/enemy.tscn" id="4_t3uxm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tm073"]
+
+[sub_resource type="Sky" id="Sky_k4hch"]
+sky_material = SubResource("ProceduralSkyMaterial_tm073")
+
+[sub_resource type="Environment" id="Environment_oidg2"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_k4hch")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_yiibs"]
+vertices = PackedVector3Array(-22, 0.6, -22, -22, 0.6, 22, 22, 0.6, 22, 22, 0.6, -22)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3iq8x"]
+size = Vector3(1, 0.290039, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_soaw5"]
+albedo_texture = ExtResource("1_q6dru")
+
+[sub_resource type="BoxMesh" id="BoxMesh_a4qc0"]
+material = SubResource("StandardMaterial3D_soaw5")
+size = Vector3(45, 0.3, 45)
 
 [node name="TestScene" type="Node3D"]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_m3hr2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7963, 0)
+camera = NodePath("../Camera")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.520756, 0.853705, 0, -0.853705, 0.520756, 0, 8, 3.37784)
+current = true
+
+[node name="InteractableObject" parent="." instance=ExtResource("3_nwm4q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30636, -7.97272)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oidg2")
+
+[node name="Enemy" parent="." instance=ExtResource("4_t3uxm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6388, 1.37828, -14.3507)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_yiibs")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
+shape = SubResource("BoxShape3D_3iq8x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
+mesh = SubResource("BoxMesh_a4qc0")

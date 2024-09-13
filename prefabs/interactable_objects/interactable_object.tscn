@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck4b4bmriaftl"]
+
+[ext_resource type="Script" path="res://prefabs/interactable_objects/interactable_object.gd" id="1_sluee"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0uyjy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5qoqj"]
+
+[node name="InteractableObject" type="StaticBody3D"]
+script = ExtResource("1_sluee")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("BoxMesh_0uyjy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5qoqj")
