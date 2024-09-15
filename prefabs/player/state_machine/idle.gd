@@ -10,5 +10,5 @@ func update_state(delta: float) -> void:
 	
 	target.move_and_slide()
 
-func exit_state(next_state: StateMachine.States) -> bool:
+func exit_state(next_state: String) -> bool:
 	return is_state_valid(next_state)

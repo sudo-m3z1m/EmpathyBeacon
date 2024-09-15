@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0fito0woiuvw"]
+
+[ext_resource type="PackedScene" uid="uid://ck4b4bmriaftl" path="res://prefabs/interactable_objects/interactable_object.tscn" id="1_m07j5"]
+[ext_resource type="PackedScene" uid="uid://b136stab4l1n4" path="res://assets/models/levels/screen_box.glb" id="2_aeyqc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lq0a5"]
+size = Vector3(7.08008, 3.52124, 1)
+
+[node name="Terminal" instance=ExtResource("1_m07j5")]
+
+[node name="screen_box" parent="Model" index="0" instance=ExtResource("2_aeyqc")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 39.5973, -9.43178, 12.7956)
+
+[node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(0.609077, 0, 0, 0, -2.66236e-08, -0.609077, 0, 0.609077, -2.66236e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_lq0a5")
+
+[editable path="Model/screen_box"]

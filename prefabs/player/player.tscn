@@ -1,37 +1,84 @@
-[gd_scene load_steps=9 format=3 uid="uid://4254jrn10k03"]
+[gd_scene load_steps=15 format=3 uid="uid://4254jrn10k03"]
 
 [ext_resource type="Script" path="res://prefabs/player/player.gd" id="1_umkkb"]
+[ext_resource type="Texture2D" uid="uid://dvcj86rnbuqpg" path="res://icon.svg" id="2_36sem"]
 [ext_resource type="Script" path="res://prefabs/player/state_machine/state_machine.gd" id="2_nnq2n"]
 [ext_resource type="Script" path="res://prefabs/player/state_machine/idle.gd" id="3_ua7r0"]
 [ext_resource type="Script" path="res://prefabs/player/input_handler.gd" id="3_xthl7"]
+[ext_resource type="PackedScene" uid="uid://bewoy38xy6rm2" path="res://prefabs/projectile.tscn" id="4_0fqcg"]
 [ext_resource type="Script" path="res://prefabs/player/state_machine/moving.gd" id="4_j47ch"]
+[ext_resource type="Script" path="res://prefabs/main/health_component.gd" id="5_1myuv"]
+[ext_resource type="Script" path="res://prefabs/player/select_component.gd" id="7_4n5ow"]
+[ext_resource type="Script" path="res://prefabs/player/weapon_component.gd" id="7_jl8aj"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_45x6y"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hl0u5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_36sem")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ljr26"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u0c8q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_36sem")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1wl7u"]
 radius = 4.02636
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ljr26"]
-
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_umkkb")
+gravity = 9.8
 
 [node name="Model" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
-mesh = SubResource("CapsuleMesh_45x6y")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.471659, 0.71679)
-mesh = SubResource("CapsuleMesh_45x6y")
-
-[node name="InteractionArea" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
-shape = SubResource("CylinderShape3D_1wl7u")
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Model"]
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_hl0u5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ljr26")
+
+[node name="WeaponComponent" type="Node3D" parent="."]
+script = ExtResource("7_jl8aj")
+projectile_packed = ExtResource("4_0fqcg")
+
+[node name="Weapon" type="Node3D" parent="WeaponComponent"]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="WeaponComponent/Weapon"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1.02239)
+sprite_frames = SubResource("SpriteFrames_u0c8q")
+
+[node name="ShotPosition" type="Marker3D" parent="WeaponComponent/Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.60821)
+
+[node name="SelectComponent" type="Node3D" parent="."]
+script = ExtResource("7_4n5ow")
+
+[node name="SelectionArea" type="Area3D" parent="SelectComponent"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SelectComponent/SelectionArea"]
+shape = SubResource("CylinderShape3D_1wl7u")
+
+[node name="HealthComponent" type="Area3D" parent="."]
+script = ExtResource("5_1myuv")
+health_points = 100.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealthComponent"]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_nnq2n")
@@ -43,8 +90,8 @@ target = NodePath("../..")
 
 [node name="Moving" type="Node" parent="StateMachine" node_paths=PackedStringArray("target")]
 script = ExtResource("4_j47ch")
-acceleration_weight = 0.05
-max_speed = 5.0
+acceleration_weight = 0.15
+max_speed = 10.0
 target = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="."]

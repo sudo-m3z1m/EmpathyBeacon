@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bewoy38xy6rm2"]
+
+[ext_resource type="Texture2D" uid="uid://dvcj86rnbuqpg" path="res://icon.svg" id="1_cjrck"]
+[ext_resource type="Script" path="res://prefabs/projectile.gd" id="1_wme2d"]
+[ext_resource type="Script" path="res://prefabs/main/damage_component.gd" id="3_u8i0g"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dsyfs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cjrck")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f2hpb"]
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_wme2d")
+projectile_speed = 10.0
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+sprite_frames = SubResource("SpriteFrames_dsyfs")
+
+[node name="DamageComponent" type="Area3D" parent="."]
+script = ExtResource("3_u8i0g")
+damage = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageComponent"]
+shape = SubResource("SphereShape3D_f2hpb")
