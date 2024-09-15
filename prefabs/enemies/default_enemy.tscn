@@ -14,21 +14,33 @@ radius = 3.0
 [node name="DefaultEnemy" instance=ExtResource("1_o7iop")]
 script = ExtResource("2_qum3b")
 
+[node name="StateMachine" parent="." index="3" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("Idle")
+
 [node name="Idle" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("target")]
 script = ExtResource("3_t12mj")
+inertia_weight = 0.1
 target = NodePath("../..")
 
 [node name="Moving" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("target")]
 script = ExtResource("4_dlwcm")
+max_speed = 5.0
+acceleration_weight = 0.05
 target = NodePath("../..")
 
 [node name="Prepare" type="Node" parent="StateMachine" index="2" node_paths=PackedStringArray("target")]
 script = ExtResource("5_sc34f")
+prepare_time = 1.0
 target = NodePath("../..")
+valid_states = Array[String](["Dash"])
 
 [node name="Dash" type="Node" parent="StateMachine" index="3" node_paths=PackedStringArray("target")]
 script = ExtResource("6_j3jle")
+dash_time = 0.4
+max_dash_speed = 50.0
+dash_acceleration_weight = 0.01
 target = NodePath("../..")
+valid_states = Array[String](["Idle"])
 
 [node name="AttackArea" type="Area3D" parent="." index="7"]
 

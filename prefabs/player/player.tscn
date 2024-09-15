@@ -80,8 +80,9 @@ health_points = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HealthComponent"]
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("2_nnq2n")
+current_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("target")]
 script = ExtResource("3_ua7r0")

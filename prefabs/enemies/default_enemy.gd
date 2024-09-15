@@ -2,7 +2,10 @@ extends Enemy
 
 @onready var attack_timer: Timer = $AttackTimer
 @onready var cooldown_timer: Timer = $CooldownTimer
+@onready var attack_area: Area3D = $AttackArea
 @onready var target: Player = get_tree().current_scene.get_node("Player") #TODO Need to add pointer to player in spawn manager
+
+var last_target_position: Vector3
 
 func _ready() -> void:
 	states = {

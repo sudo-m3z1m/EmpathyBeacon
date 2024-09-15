@@ -4,7 +4,7 @@ class_name StateMachine
 
 @onready var target: Object = get_parent()
 
-@onready var current_state: State = $Idle
+@export var current_state: State
 
 func _process(delta: float) -> void:
 	current_state.update_state(delta)
