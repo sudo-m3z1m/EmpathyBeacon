@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://bm1gtrd4h3x6"]
+
+[ext_resource type="PackedScene" uid="uid://c6ro7fkydoa7c" path="res://prefabs/enemies/enemy.tscn" id="1_m1eol"]
+[ext_resource type="Script" path="res://prefabs/enemies/mitosis_enemy.gd" id="2_5j8sx"]
+[ext_resource type="Script" path="res://prefabs/enemies/mitosis_enemy_states/idle.gd" id="3_px4b5"]
+[ext_resource type="PackedScene" uid="uid://bxan8lvmbylym" path="res://prefabs/enemies/mitosis_spawn.tscn" id="3_xvpyh"]
+[ext_resource type="Script" path="res://prefabs/enemies/mitosis_enemy_states/moving.gd" id="4_1njlu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u0qll"]
+radius = 0.782251
+height = 1.69038
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_swl1t"]
+radius = 0.677662
+height = 1.5335
+
+[node name="MitosisEnemy" instance=ExtResource("1_m1eol")]
+script = ExtResource("2_5j8sx")
+mitosis_spawns_packed = ExtResource("3_xvpyh")
+max_mitosis_spawns_count = 5
+
+[node name="StateMachine" parent="." index="3" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" index="0" node_paths=PackedStringArray("target")]
+script = ExtResource("3_px4b5")
+inertia_weight = 0.001
+target = NodePath("../..")
+
+[node name="Moving" type="Node" parent="StateMachine" index="1" node_paths=PackedStringArray("target")]
+script = ExtResource("4_1njlu")
+max_speed = 10.0
+acceleration_weight = 0.007
+target = NodePath("../..")
+
+[node name="HealthComponent" parent="." index="5"]
+health_points = 50.0
+
+[node name="CollisionShape3D" parent="HealthComponent" index="0"]
+shape = SubResource("CapsuleShape3D_u0qll")
+
+[node name="CollisionShape3D" parent="DamageComponent" index="0"]
+shape = SubResource("CapsuleShape3D_swl1t")

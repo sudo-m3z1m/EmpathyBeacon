@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxan8lvmbylym"]
+
+[ext_resource type="Script" path="res://prefabs/enemies/mitosis_spawn.gd" id="1_1odj5"]
+[ext_resource type="Texture2D" uid="uid://dvcj86rnbuqpg" path="res://icon.svg" id="1_r1kp7"]
+[ext_resource type="Script" path="res://prefabs/main/health_component.gd" id="2_kqdp3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w1vrn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_r1kp7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n6ldl"]
+size = Vector3(0.337646, 1, 0.558594)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mwy1d"]
+
+[node name="MitosisSpawn" type="RigidBody3D"]
+script = ExtResource("1_1odj5")
+enemy_paths = Array[String](["res://prefabs/enemies/mitosis_enemy.tscn", "res://prefabs/enemies/default_enemy.tscn"])
+rand_force_begin = 400.0
+rand_force_end = 500.0
+spawn_time = 3.0
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Model"]
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_w1vrn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_n6ldl")
+
+[node name="HealthComponent" type="Area3D" parent="."]
+script = ExtResource("2_kqdp3")
+health_points = 200.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealthComponent"]
+shape = SubResource("BoxShape3D_mwy1d")
+
+[node name="SpawnTimer" type="Timer" parent="."]

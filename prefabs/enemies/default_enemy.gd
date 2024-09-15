@@ -3,7 +3,6 @@ extends Enemy
 @onready var attack_timer: Timer = $AttackTimer
 @onready var cooldown_timer: Timer = $CooldownTimer
 @onready var attack_area: Area3D = $AttackArea
-@onready var target: Player = get_tree().current_scene.get_node("Player") #TODO Need to add pointer to player in spawn manager
 
 var last_target_position: Vector3
 
@@ -21,8 +20,3 @@ func _process(delta: float) -> void:
 	if !agent.is_target_reachable():
 		return state_machine.change_state("Idle")
 	state_machine.change_state("Moving")
-
-func get_path_point_to_target() -> Vector3:
-	var point: Vector3 = agent.get_next_path_position()
-
-	return point

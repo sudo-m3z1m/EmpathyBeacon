@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6ro7fkydoa7c"]
+[gd_scene load_steps=8 format=3 uid="uid://c6ro7fkydoa7c"]
 
 [ext_resource type="Script" path="res://prefabs/enemies/enemy.gd" id="1_do254"]
 [ext_resource type="Texture2D" uid="uid://dvcj86rnbuqpg" path="res://icon.svg" id="2_e2b62"]
@@ -21,18 +21,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_73ln6"]
-radius = 0.634196
-height = 1.65448
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r2qa4"]
-radius = 0.686631
-height = 1.75404
-
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_do254")
-max_speed = 5.0
-acceleration_weight = 0.01
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_r2ulp")
@@ -54,13 +44,10 @@ script = ExtResource("3_u0vbg")
 
 [node name="HealthComponent" type="Area3D" parent="."]
 script = ExtResource("3_m3dwk")
-health_points = 15.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HealthComponent"]
-shape = SubResource("CapsuleShape3D_73ln6")
 
 [node name="DamageComponent" type="Area3D" parent="."]
 script = ExtResource("4_tt4aw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageComponent"]
-shape = SubResource("CapsuleShape3D_r2qa4")

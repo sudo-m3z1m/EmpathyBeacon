@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cpq4ee1w3aflq"]
+[gd_scene load_steps=13 format=3 uid="uid://cpq4ee1w3aflq"]
 
 [ext_resource type="PackedScene" uid="uid://4254jrn10k03" path="res://prefabs/player/player.tscn" id="2_m3hr2"]
 [ext_resource type="PackedScene" uid="uid://ck4b4bmriaftl" path="res://prefabs/interactable_objects/interactable_object.tscn" id="3_nwm4q"]
 [ext_resource type="PackedScene" uid="uid://b0fito0woiuvw" path="res://prefabs/interactable_objects/terminal.tscn" id="4_6fapt"]
 [ext_resource type="PackedScene" uid="uid://ch02hew80dl3" path="res://prefabs/enemies/default_enemy.tscn" id="4_a5o4y"]
+[ext_resource type="PackedScene" uid="uid://bm1gtrd4h3x6" path="res://prefabs/enemies/mitosis_enemy.tscn" id="5_ma5ai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tokxq"]
 
@@ -38,6 +39,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78033, 0)
 
 [node name="DefaultEnemy" parent="." instance=ExtResource("4_a5o4y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4519, 0.955102, 0)
+
+[node name="MitosisEnemy" parent="." instance=ExtResource("5_ma5ai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7971, 1.02262, 0)
+max_mitosis_spawns_count = 0
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.549548, 0.835462, 0, -0.835462, 0.549548, 0, 15.1878, 15.4542)

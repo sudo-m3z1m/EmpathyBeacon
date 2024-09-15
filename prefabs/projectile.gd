@@ -9,7 +9,7 @@ class_name Projectile
 var direction: Vector3 = Vector3.FORWARD
 
 func _ready() -> void:
-	damage_component.area_entered.connect(health_component_entered)
+	damage_component.body_entered.connect(body_entered)
 
 func _process(delta: float) -> void:
 	move(delta)
@@ -21,5 +21,5 @@ func set_direction(new_direction: Vector3 = Vector3.FORWARD) -> void:
 	direction = -new_direction
 	rotation.y = atan2(new_direction.x, new_direction.z)
 
-func health_component_entered(area: Node3D) -> void:
+func body_entered(body: Node3D) -> void:
 	queue_free()
